@@ -2,28 +2,29 @@
 #include <omp.h>
 #include <cuda_runtime.h>
 
-// Function to calculate forces (placeholder for actual force calculation logic)
-void calculateForces(...) {
-    // Force calculation logic goes here
+// Function to calculate forces
+void calculateForces() {
+    // Force calculation
 }
 
-// CUDA Kernel for force calculations (simplified)
-__global__ void calculateForcesCUDA(...) {
-    // CUDA-based force calculation logic
+// CUDA Kernel for force calculations
+__global__ void calculateForcesCUDA() {
+    // CUDA-based force calculation
 }
 
 // Function to initialize the molecular system
-void initializeSystem(...) {
+void initializeSystem() {
     // Initialize positions, velocities, etc.
+    // This mainly contains Nitrogen, Boron, Carbon, and LFP particles
 }
 
 // Function to distribute initial conditions to worker nodes
-void distributeInitialConditions(...) {
+void distributeInitialConditions() {
     // Logic to distribute initial conditions to worker nodes
 }
 
 // Function to gather results from worker nodes
-void gatherResults(...) {
+void gatherResults() {
     // Logic to gather results from worker nodes
 }
 
@@ -35,34 +36,32 @@ int main(int argc, char** argv) {
     // Differentiate between master and worker nodes
     if (world_rank == 0) {
         // Master node work
-        initializeSystem(...);
-        distributeInitialConditions(...);
+        initializeSystem();
+        distributeInitialConditions();
     } else {
         // Worker nodes work
         // Receive initial conditions from master node
-        // ...
+
 
 #pragma omp parallel
         {
             // Parallel force calculations using OpenMP
-            calculateForces(...);
+            calculateForces();
         }
 
         // CUDA kernel call for computationally intensive parts
-        calculateForcesCUDA<<<blocks, threads>>>(...);
+        calculateForcesCUDA<<<blocks, threads>>>();
     }
 
-    // Time integration loop (e.g., Verlet, Velocity-Verlet, etc.)
+    // Time integration loop
     for (int step = 0; step < num_steps; step++) {
         // Update positions and velocities of molecules
-        // ...
 
         // Worker nodes send partial results to master node
-        // ...
 
         if (world_rank == 0) {
             // Master node gathers results from all worker nodes
-            gatherResults(...);
+            gatherResults();
         }
     }
 

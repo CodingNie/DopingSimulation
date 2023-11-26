@@ -19,7 +19,7 @@ __device__ double dopingOperation(double value) {
     // operations
 }
 
-// Function to calculate reaction rate using Arrhenius equation (parallelized)
+// Calculate reaction rate using Arrhenius equation
 double calculateReactionRate(double A, double Ea, double T) {
     double rate = 0.0;
 #pragma omp parallel
@@ -32,7 +32,7 @@ double calculateReactionRate(double A, double Ea, double T) {
     return rate;
 }
 
-// Function to calculate Gibbs free energy (parallelized)
+// Function to calculate Gibbs free energy
 double calculateGibbsFreeEnergy(double enthalpy, double entropy, double T) {
     double gibbsEnergy = 0.0;
 #pragma omp parallel
@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
 
     // Prepare data for CUDA calculations
     double *hostInput, *hostOutput;
-    int dataSize = ...; // Define the size of your data
+    int dataSize = 1000; // the size of data, say 1000 here
     // Allocate and initialize hostInput and hostOutput
 
     // Run CUDA calculations
@@ -92,7 +92,6 @@ int main(int argc, char** argv) {
     if (world_rank == 0) {
         // Master node gathers results
     }
-
     // Free host memory
     free(hostInput);
     free(hostOutput);
